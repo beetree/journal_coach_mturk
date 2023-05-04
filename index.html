@@ -1,12 +1,12 @@
 <html>
 <head>
-<title>Journal Bot Web</title>
+<title>Journal Coach</title>
 </head>
 <body>
 <section class="msger">
   <header class="msger-header">
     <div class="msger-header-title">
-      <i class="fas fa-comment-alt"></i> Journal Bot Chat
+      <i class="fas fa-comment-alt"></i> Journal Coach
     </div>
     <div class="msger-header-options">
       <span><i class="fas fa-cog"></i></span>
@@ -22,33 +22,16 @@
 
       <div class="msg-bubble">
         <div class="msg-info">
-          <div class="msg-info-name">Journal Bot</div>
-          <div class="msg-info-time">12:45</div>
+          <div class="msg-info-name">Anna</div>
+          <div class="msg-info-time"></div>
         </div>
 
         <div class="msg-text">
-          Hi, welcome to Journal Bot! Go ahead and send me a message. 😄
+          Hello!
         </div>
       </div>
     </div>
 
-    <div class="msg right-msg">
-      <div
-       class="msg-img"
-       style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-      ></div>
-
-      <div class="msg-bubble">
-        <div class="msg-info">
-          <div class="msg-info-name">Beetree</div>
-          <div class="msg-info-time">12:46</div>
-        </div>
-
-        <div class="msg-text">
-          You can change your name in JS section!
-        </div>
-      </div>
-    </div>
   </main>
 
   <form class="msger-inputarea">
@@ -73,8 +56,8 @@ const BOT_MSGS = [
 // Icons made by Freepik from www.flaticon.com
 const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
 const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
-const BOT_NAME = "Journal Bot";
-const PERSON_NAME = "Beetree";
+const BOT_NAME = "Anna";
+const PERSON_NAME = "User";
 
 msgerForm.addEventListener("submit", event => {
   event.preventDefault();
@@ -82,11 +65,43 @@ msgerForm.addEventListener("submit", event => {
   const msgText = msgerInput.value;
   if (!msgText) return;
 
+  getResponseFromBot(msgText);
+
   appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
   msgerInput.value = "";
 
-  botResponse();
 });
+
+
+function Message(role, content) {
+  this.role = role;
+  this.content = content;
+}
+
+const history = [];
+history.push(new Message("user", "hey, what's up?"));
+console.log(history);
+
+
+function getResponseFromBot(message) {
+  history.push(new Message("user", message));
+    fetch('https://z2jofccmrpgzsxktosswjzxply0valso.lambda-url.us-west-1.on.aws/?user=johan&access_key=io2A77YOjipSobGT5C0kFRTOzWqpL5Qh', {
+        method: 'POST',
+      body: JSON.stringify({
+     "history": history
+    })
+    })
+     .then(response => response.json())
+//     .then(response => console.log(JSON.stringify(response)))
+     .then(response => handleBotResponse(response))
+}
+
+function handleBotResponse(response) {
+  //alert(response);
+  botResponse(response["agent"]);
+  //botResponse("hej");
+}
+
 
 function appendMessage(name, img, side, text) {
   //   Simple solution for small apps
@@ -109,14 +124,14 @@ function appendMessage(name, img, side, text) {
   msgerChat.scrollTop += 500;
 }
 
-function botResponse() {
-  const r = random(0, BOT_MSGS.length - 1);
-  const msgText = BOT_MSGS[r];
-  const delay = msgText.split(" ").length * 100;
+function botResponse(msgText) {
+  //const r = random(0, BOT_MSGS.length - 1);
+  //const msgText = BOT_MSGS[r];
+  //const delay = msgText.split(" ").length * 100;
 
-  setTimeout(() => {
-    appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-  }, delay);
+  //setTimeout(() => {
+  appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+  //}, delay);
 }
 
 // Utils
@@ -292,3 +307,4 @@ body {
 </style>
 </body>
 </html>
+
