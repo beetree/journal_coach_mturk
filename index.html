@@ -85,7 +85,7 @@ console.log(history);
 
 function getResponseFromBot(message) {
   history.push(new Message("user", message));
-    fetch('https://z2jofccmrpgzsxktosswjzxply0valso.lambda-url.us-west-1.on.aws/?user=johan&access_key=io2A77YOjipSobGT5C0kFRTOzWqpL5Qh', {
+    fetch("https://z2jofccmrpgzsxktosswjzxply0valso.lambda-url.us-west-1.on.aws/?user=mturk_" + Math.floor(Date.now() / 1000).toString() + "&access_key=io2A77YOjipSobGT5C0kFRTOzWqpL5Qh", {
         method: 'POST',
       body: JSON.stringify({
      "history": history
