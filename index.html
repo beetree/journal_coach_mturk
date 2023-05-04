@@ -99,6 +99,8 @@ function getResponseFromBot(message) {
 function handleBotResponse(response) {
   //alert(response);
   botResponse(response["agent"]);
+  history.push(new Message("assistant", response["agent"]));
+
   //botResponse("hej");
 }
 
