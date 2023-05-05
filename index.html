@@ -82,10 +82,11 @@ const history = [];
 history.push(new Message("user", "hey, what's up?"));
 console.log(history);
 
-var startingTime = Math.floor(Date.now() / 1000);
+//var hash = Math.floor(Date.now() / 1000);
+var hash = "X" + Math.round(10000*Math.random()).toString();
 function getResponseFromBot(message) {
   history.push(new Message("user", message));
-    fetch("https://z2jofccmrpgzsxktosswjzxply0valso.lambda-url.us-west-1.on.aws/?user=mturk_" + startingTime.toString() + "&access_key=io2A77YOjipSobGT5C0kFRTOzWqpL5Qh", {
+    fetch("https://z2jofccmrpgzsxktosswjzxply0valso.lambda-url.us-west-1.on.aws/?user=mturk_" + hash + "&access_key=io2A77YOjipSobGT5C0kFRTOzWqpL5Qh", {
         method: 'POST',
       body: JSON.stringify({
      "history": history
