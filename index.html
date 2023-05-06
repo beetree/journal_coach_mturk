@@ -88,8 +88,9 @@ function getResponseFromBot(message) {
 
 function handleBotResponse(response) {
   //alert(response);
-  botResponse(response["agent"]);
-  history.push(new Message("assistant", response["agent"]));
+  var text = response["agent"].replace(/\r?\n|\r/g, '<br>');
+  botResponse(text);
+  history.push(new Message("assistant", text));
 
   //botResponse("hej");
 }
